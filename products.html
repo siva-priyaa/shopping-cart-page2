@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopEase - Products</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <a href="index.html" class="logo">🛍️ ShopEase</a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="products.html">Products</a>
+
+        <a href="wishlist.html">
+            ❤️ Wishlist
+            <span id="wishlist-count">0</span>
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+
+        <a href="orders.html">📦 Orders</a>
+
+        <a href="account.html">👤 Account</a>
+
+        <a href="seller-login.html" class="nav-seller-link" style="color: #f59e0b; font-weight: 600;">🏪 Seller Login</a>
+
+        <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+    <h1>🛍️ Our Products</h1>
+
+    <p class="page-subtitle">
+        Explore our collection.
+    </p>
+
+
+    <div class="controls">
+
+        <input
+            type="text"
+            id="search-input"
+            placeholder="🔍 Search products..."
+            oninput="filterProducts()"
+        >
+
+        <select
+            id="category-filter"
+            onchange="filterProducts()"
+        >
+
+            <option value="all">All Categories 🛍️</option>
+            <option value="electronics">⚡ Electronics & Gadgets</option>
+            <option value="fashion">👗 Fashion & Clothing</option>
+            <option value="accessories">👜 Accessories & Bags</option>
+            <option value="home">🏡 Home & Kitchen</option>
+            <option value="beauty">💄 Beauty & Personal Care</option>
+
+        </select>
+
+        <select
+            id="sort-filter"
+            onchange="filterProducts()"
+        >
+            <option value="default">Sort: Featured ✨</option>
+            <option value="price-low">Price: Low to High 📉</option>
+            <option value="price-high">Price: High to Low 📈</option>
+            <option value="rating">Customer Rating ⭐</option>
+        </select>
+
+    </div>
+
+
+    <div id="product-list" class="product-list"></div>
+
+</main>
+
+<!-- Product Details Modal (Flipkart & Meesho Style) -->
+<div id="product-detail-modal" class="modal-overlay" onclick="handleModalBackdropClick(event)">
+    <div class="modal-card">
+        <button class="modal-close-btn" onclick="closeProductDetails()" aria-label="Close">✕</button>
+        <div id="modal-product-content" class="modal-product-content"></div>
+    </div>
+</div>
+
+<footer>
+    <h3>🛍️ ShopEase</h3>
+    <p>Simple. Smart. Convenient Shopping.</p>
+    <div class="footer-links">
+        <a href="seller-login.html" class="footer-seller-link">🏪 Sell on ShopEase (Seller Portal)</a>
+    </div>
+    <p>© 2026 ShopEase. All Rights Reserved.</p>
+</footer>
+
+
+<div id="notification" class="notification"></div>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

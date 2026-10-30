@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ShopEase - Account</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <a href="index.html" class="logo">🛍️ ShopEase</a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="products.html">Products</a>
+
+        <a href="wishlist.html">
+            ❤️ Wishlist
+            <span id="wishlist-count">0</span>
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+
+        <a href="orders.html">📦 Orders</a>
+
+        <a href="account.html">👤 Account</a>
+
+        <a href="seller-login.html" class="nav-seller-link" style="color: #f59e0b; font-weight: 600;">🏪 Seller Login</a>
+
+        <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container account-page">
+
+    <h1>👤 My Account</h1>
+
+    <p class="page-subtitle">
+        Create an account or login.
+    </p>
+
+
+    <div id="auth-section" class="auth-card">
+
+        <div class="auth-tabs">
+
+            <button
+                id="login-tab"
+                class="active-tab"
+                onclick="showLogin()"
+            >
+                Login
+            </button>
+
+            <button
+                id="signup-tab"
+                onclick="showSignup()"
+            >
+                Sign Up
+            </button>
+
+        </div>
+
+
+        <div id="login-form">
+
+            <h2>Welcome Back 👋</h2>
+
+            <input
+                type="email"
+                id="login-email"
+                placeholder="Email address"
+            >
+
+            <input
+                type="password"
+                id="login-password"
+                placeholder="Password"
+            >
+
+            <button
+                class="main-action"
+                onclick="login()"
+            >
+                Login
+            </button>
+
+            <p id="login-message"></p>
+
+        </div>
+
+
+        <div
+            id="signup-form"
+            class="hidden"
+        >
+
+            <h2>Create Account ✨</h2>
+
+            <input
+                type="text"
+                id="signup-name"
+                placeholder="Full name"
+            >
+
+            <input
+                type="email"
+                id="signup-email"
+                placeholder="Email address"
+            >
+
+            <input
+                type="password"
+                id="signup-password"
+                placeholder="Create password"
+            >
+
+            <button
+                class="main-action"
+                onclick="signup()"
+            >
+                Create Account
+            </button>
+
+            <p id="signup-message"></p>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="profile-section"
+        class="profile-card hidden"
+    >
+
+        <div class="profile-icon">
+            👤
+        </div>
+
+        <h2 id="profile-name">User</h2>
+
+        <p id="profile-email">
+            email@example.com
+        </p>
+
+
+        <div class="profile-actions">
+
+            <a href="orders.html">
+                📦 My Orders
+            </a>
+
+            <a href="wishlist.html">
+                ❤️ My Wishlist
+            </a>
+
+            <a href="cart.html">
+                🛒 My Cart
+            </a>
+
+        </div>
+
+        <div class="account-address-section" style="margin-top: 25px; text-align: left; background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.2); border-radius: 14px; padding: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h4 style="margin: 0; font-size: 16px; color: var(--text);">📍 Default Delivery Address</h4>
+                <a href="cart.html" style="font-size: 13px; color: #7c3aed; text-decoration: none; font-weight: 600;">Edit in Cart →</a>
+            </div>
+            <div id="account-saved-address">
+                <p style="color: var(--text-muted); font-size: 14px; margin: 0;">No address saved yet. Addresses saved during checkout will appear here.</p>
+            </div>
+        </div>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+            style="width: 100%; margin-top: 25px; font-size: 16px; padding: 14px 20px; background: #ef4444; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;"
+        >
+            🚪 Log Out from ShopEase
+        </button>
+
+    </div>
+
+</main>
+
+
+<footer>
+    <h3>🛍️ ShopEase</h3>
+    <p>Simple. Smart. Convenient Shopping.</p>
+    <div class="footer-links">
+        <a href="seller-login.html" class="footer-seller-link">🏪 Sell on ShopEase (Seller Portal)</a>
+    </div>
+    <p>© 2026 ShopEase. All Rights Reserved.</p>
+</footer>
+
+
+<div id="notification" class="notification"></div>
+<script src="auth.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

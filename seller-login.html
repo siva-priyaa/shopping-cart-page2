@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase - Seller Hub | Supplier Login & Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .seller-auth-body {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #f8fafc;
+            font-family: inherit;
+        }
+        .seller-auth-header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .seller-auth-header .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .customer-switch-link {
+            color: #c7d2fe;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: 1px solid rgba(199, 210, 254, 0.4);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .customer-switch-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .seller-auth-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            flex: 1;
+        }
+        @media (max-width: 850px) {
+            .seller-auth-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .seller-hero-text h1 {
+            font-size: 38px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: white;
+        }
+        .seller-hero-text p {
+            font-size: 16px;
+            color: #c7d2fe;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .perks-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .perks-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: #e0e7ff;
+        }
+        .perks-list .check-icon {
+            background: #10b981;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .seller-card {
+            background: #ffffff;
+            color: #1e293b;
+            padding: 35px 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        .seller-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .seller-tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .seller-tab-btn.active {
+            color: #4f46e5;
+            border-bottom-color: #4f46e5;
+        }
+        .seller-form-group {
+            margin-bottom: 16px;
+        }
+        .seller-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .seller-form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .seller-form-group input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .seller-submit-btn {
+            width: 100%;
+            background: #4f46e5;
+            color: white;
+            padding: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .seller-submit-btn:hover {
+            background: #4338ca;
+        }
+        .seller-alert-msg {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .seller-alert-msg.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
+        .seller-alert-msg.success {
+            display: block;
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+        .seller-auth-footer {
+            text-align: center;
+            padding: 20px;
+            color: #a5b4fc;
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="seller-auth-body">
+
+<header class="seller-auth-header">
+    <a href="index.html" class="logo">
+        🛍️ ShopEase <span style="font-size: 14px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 6px;">Seller Portal</span>
+    </a>
+    <a href="index.html" class="customer-switch-link">
+        🛒 Switch to Customer Shopping Store
+    </a>
+</header>
+
+<div class="seller-auth-container">
+
+    <div class="seller-hero-text">
+        <span style="background: rgba(99, 102, 241, 0.3); border: 1px solid #818cf8; color: #e0e7ff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 15px;">
+            🏪 Supplier & Merchant Hub
+        </span>
+        <h1>Grow your business with ShopEase Marketplace</h1>
+        <p>List your products, reach millions of buyers across India, manage your catalog and track earnings directly with secure seller authentication.</p>
+
+        <ul class="perks-list">
+            <li><span class="check-icon">✓</span> <strong>0% Commission</strong> for the first 30 days</li>
+            <li><span class="check-icon">✓</span> <strong>Fast 7-Day</strong> direct bank payouts</li>
+            <li><span class="check-icon">✓</span> <strong>Full Ownership:</strong> You control your price, stock & details</li>
+            <li><span class="check-icon">✓</span> <strong>Separate Secure Dashboard:</strong> Completely isolated from customer views</li>
+        </ul>
+    </div>
+
+    <div class="seller-card">
+        <div class="seller-tabs">
+            <button class="seller-tab-btn active" id="tab-login" onclick="switchSellerTab('login')">Seller Login</button>
+            <button class="seller-tab-btn" id="tab-register" onclick="switchSellerTab('register')">Register as Seller</button>
+        </div>
+
+        <div id="seller-alert" class="seller-alert-msg"></div>
+
+        <!-- Seller Login Form -->
+        <form id="seller-login-form" onsubmit="handleSellerLogin(event)">
+            <div class="seller-form-group">
+                <label for="seller-email">Seller Email Address *</label>
+                <input type="email" id="seller-email" placeholder="e.g. store@business.com" required autocomplete="email" />
+            </div>
+
+            <div class="seller-form-group">
+                <label for="seller-password">Password *</label>
+                <input type="password" id="seller-password" placeholder="Enter your seller password" required autocomplete="current-password" />
+            </div>
+
+            <button type="submit" class="seller-submit-btn" id="btn-seller-login">
+                🚀 Login to Seller Dashboard
+            </button>
+        </form>
+
+        <!-- Seller Registration Form -->
+        <form id="seller-register-form" onsubmit="handleSellerRegister(event)" style="display: none;">
+            <div class="seller-form-group">
+                <label for="reg-seller-name">Full Name *</label>
+                <input type="text" id="reg-seller-name" placeholder="e.g. Sivapriya P R" required />
+            </div>
+
+            <div class="seller-form-group">
+                <label for="reg-store-name">Store / Business Name *</label>
+                <input type="text" id="reg-store-name" placeholder="e.g. Priya Fashion Trends" required />
+            </div>
+
+            <div class="seller-form-group">
+                <label for="reg-seller-email">Business Email *</label>
+                <input type="email" id="reg-seller-email" placeholder="seller@business.com" required />
+            </div>
+
+            <div class="seller-form-group">
+                <label for="reg-seller-phone">Mobile Number</label>
+                <input type="tel" id="reg-seller-phone" placeholder="e.g. 9876543210" />
+            </div>
+
+            <div class="seller-form-group">
+                <label for="reg-seller-password">Create Password (min 6 characters) *</label>
+                <input type="password" id="reg-seller-password" placeholder="Choose a strong password" minlength="6" required />
+            </div>
+
+            <div class="seller-form-group">
+                <label for="reg-seller-passkey">Seller Security Passkey * (Default: SELLER2026)</label>
+                <input type="password" id="reg-seller-passkey" placeholder="Enter Seller Passkey (SELLER2026)" required value="SELLER2026" />
+                <small style="font-size: 11px; color: #64748b; display: block; margin-top: 4px;">Protects seller portal from unauthorized registrations.</small>
+            </div>
+
+            <button type="submit" class="seller-submit-btn" id="btn-seller-register">
+                🎉 Create Seller Account & Open Dashboard
+            </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 20px; font-size: 13px; color: #64748b;">
+            Not a seller? <a href="login.html" style="color: #4f46e5; font-weight: 700; text-decoration: none;">Go to Customer Login</a>
+        </p>
+    </div>
+
+</div>
+
+<footer class="seller-auth-footer">
+    © 2026 ShopEase Marketplace. All Rights Reserved. Seller Security Verification Active.
+</footer>
+
+<script>
+function switchSellerTab(tab) {
+    const loginForm = document.getElementById("seller-login-form");
+    const regForm = document.getElementById("seller-register-form");
+    const tabLogin = document.getElementById("tab-login");
+    const tabReg = document.getElementById("tab-register");
+    const alertBox = document.getElementById("seller-alert");
+    alertBox.className = "seller-alert-msg";
+    alertBox.textContent = "";
+
+    if (tab === "login") {
+        loginForm.style.display = "block";
+        regForm.style.display = "none";
+        tabLogin.classList.add("active");
+        tabReg.classList.remove("active");
+    } else {
+        loginForm.style.display = "none";
+        regForm.style.display = "block";
+        tabLogin.classList.remove("active");
+        tabReg.classList.add("active");
+    }
+}
+
+const API_BASE = (window.location.protocol === "file:" || (window.location.port && window.location.port !== "3000"))
+    ? "http://localhost:3000"
+    : "";
+
+function showSellerAlert(msg, isError = true) {
+    const alertBox = document.getElementById("seller-alert");
+    alertBox.className = isError ? "seller-alert-msg error" : "seller-alert-msg success";
+    alertBox.textContent = msg;
+}
+
+async function handleSellerLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById("seller-email").value.trim();
+    const password = document.getElementById("seller-password").value;
+    const btn = document.getElementById("btn-seller-login");
+
+    btn.disabled = true;
+    btn.textContent = "Verifying Seller Credentials...";
+
+    try {
+        const res = await fetch(API_BASE + "/api/auth/seller/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            showSellerAlert("✅ Login successful! Redirecting to Seller Dashboard...", false);
+            localStorage.setItem("shopease_seller_token", data.token);
+            localStorage.setItem("shopease_seller_user", JSON.stringify(data.user));
+            // Also set general token so shared endpoints work smoothly
+            localStorage.setItem("shopease_token", data.token);
+            localStorage.setItem("shopease_user", JSON.stringify(data.user));
+
+            setTimeout(() => {
+                window.location.href = "seller.html";
+            }, 800);
+        } else {
+            showSellerAlert(data.error || "Login failed. Check your credentials.");
+            btn.disabled = false;
+            btn.textContent = "🚀 Login to Seller Dashboard";
+        }
+    } catch (err) {
+        showSellerAlert("Network error: " + err.message);
+        btn.disabled = false;
+        btn.textContent = "🚀 Login to Seller Dashboard";
+    }
+}
+
+async function handleSellerRegister(e) {
+    e.preventDefault();
+    const name = document.getElementById("reg-seller-name").value.trim();
+    const storeName = document.getElementById("reg-store-name").value.trim();
+    const email = document.getElementById("reg-seller-email").value.trim();
+    const phone = document.getElementById("reg-seller-phone").value.trim();
+    const password = document.getElementById("reg-seller-password").value;
+    const sellerPasskey = document.getElementById("reg-seller-passkey").value.trim();
+    const btn = document.getElementById("btn-seller-register");
+
+    btn.disabled = true;
+    btn.textContent = "Registering Seller Account...";
+
+    try {
+        const res = await fetch(API_BASE + "/api/auth/seller/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, storeName, email, phone, password, sellerPasskey }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            showSellerAlert("🎉 Seller account registered! Loading Dashboard...", false);
+            localStorage.setItem("shopease_seller_token", data.token);
+            localStorage.setItem("shopease_seller_user", JSON.stringify(data.user));
+            localStorage.setItem("shopease_token", data.token);
+            localStorage.setItem("shopease_user", JSON.stringify(data.user));
+
+            setTimeout(() => {
+                window.location.href = "seller.html";
+            }, 1000);
+        } else {
+            showSellerAlert(data.error || "Registration failed.");
+            btn.disabled = false;
+            btn.textContent = "🎉 Create Seller Account & Open Dashboard";
+        }
+    } catch (err) {
+        showSellerAlert("Network error: " + err.message);
+        btn.disabled = false;
+        btn.textContent = "🎉 Create Seller Account & Open Dashboard";
+    }
+}
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ShopEase - Cart</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <a href="index.html" class="logo">🛍️ ShopEase</a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="products.html">Products</a>
+
+        <a href="wishlist.html">
+            ❤️ Wishlist
+            <span id="wishlist-count">0</span>
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+
+        <a href="orders.html">📦 Orders</a>
+
+        <a href="account.html">👤 Account</a>
+
+        <a href="seller-login.html" class="nav-seller-link" style="color: #f59e0b; font-weight: 600;">🏪 Seller Login</a>
+
+        <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+    <h1>🛒 Shopping Cart</h1>
+
+    <p class="page-subtitle">
+        Review your selected products.
+    </p>
+
+
+    <div id="cart-items"></div>
+
+
+    <div class="coupon-box">
+
+        <h3>🎟️ Have a Coupon?</h3>
+
+        <p class="coupon-hint">
+            Try SAVE10 or SAVE20
+        </p>
+
+        <div class="coupon-input">
+
+            <input
+                type="text"
+                id="coupon-input"
+                placeholder="Enter coupon code"
+            >
+
+            <button onclick="applyCoupon()">
+                Apply
+            </button>
+
+        </div>
+
+        <p id="coupon-message"></p>
+
+    </div>
+
+    <!-- Meesho & Flipkart Style Delivery Address Box -->
+    <div class="delivery-address-card">
+        <div class="delivery-card-header">
+            <div class="header-title">
+                <h3>📍 Delivery Address</h3>
+                <span class="delivery-badge" id="delivery-badge">Deliver to this Address</span>
+            </div>
+            <button type="button" class="edit-addr-btn" id="toggle-address-btn" onclick="toggleAddressForm()">
+                ✏️ Change Address
+            </button>
+        </div>
+
+        <!-- Saved Address Card Preview -->
+        <div id="saved-address-preview" class="saved-address-preview" style="display: none;">
+            <div class="saved-addr-content">
+                <div class="addr-name-tag">
+                    <strong id="preview-addr-name">Customer</strong>
+                    <span class="addr-type-pill" id="preview-addr-type">HOME</span>
+                    <span class="addr-phone" id="preview-addr-phone">📞 9876543210</span>
+                </div>
+                <p id="preview-addr-full" class="addr-full-text">
+                    108 Central Residency, MG Road, Bengaluru, Karnataka - 560001
+                </p>
+            </div>
+        </div>
+
+        <!-- Comprehensive Customer Delivery Address Form -->
+        <div id="address-form-container" class="address-form-container">
+            <p class="addr-subtitle">Enter your exact shipping address for on-time Meesho & Flipkart style doorstep delivery.</p>
+            <div class="address-grid">
+                <div class="form-group-col">
+                    <label for="shipping-name">Full Name <span class="req">*</span></label>
+                    <input type="text" id="shipping-name" placeholder="Recipient's full name" required />
+                </div>
+                <div class="form-group-col">
+                    <label for="shipping-phone">Phone Number (10 digits) <span class="req">*</span></label>
+                    <input type="tel" id="shipping-phone" placeholder="10-digit mobile number" maxlength="10" required />
+                </div>
+                <div class="form-group-col">
+                    <label for="shipping-pincode">Pincode (6 digits) <span class="req">*</span></label>
+                    <input type="text" id="shipping-pincode" placeholder="e.g. 560001" maxlength="6" required />
+                </div>
+                <div class="form-group-col">
+                    <label for="shipping-house">Flat, House No., Building <span class="req">*</span></label>
+                    <input type="text" id="shipping-house" placeholder="e.g. Flat 304, Sunshine Towers" required />
+                </div>
+                <div class="form-group-col full-width">
+                    <label for="shipping-street">Area, Street, Colony, Sector <span class="req">*</span></label>
+                    <input type="text" id="shipping-street" placeholder="e.g. 100 Feet Road, Indiranagar" required />
+                </div>
+                <div class="form-group-col">
+                    <label for="shipping-landmark">Landmark (Optional)</label>
+                    <input type="text" id="shipping-landmark" placeholder="e.g. Near Metro Station / City Hospital" />
+                </div>
+                <div class="form-group-col">
+                    <label for="shipping-city">Town / City <span class="req">*</span></label>
+                    <input type="text" id="shipping-city" placeholder="e.g. Bengaluru" required />
+                </div>
+                <div class="form-group-col">
+                    <label for="shipping-state">State <span class="req">*</span></label>
+                    <input type="text" id="shipping-state" placeholder="e.g. Karnataka" required />
+                </div>
+            </div>
+
+            <div class="address-type-selection">
+                <label class="type-label">Address Type:</label>
+                <div class="radio-chips">
+                    <label class="chip-option">
+                        <input type="radio" name="addressType" value="Home" checked />
+                        <span>🏠 Home (All day delivery)</span>
+                    </label>
+                    <label class="chip-option">
+                        <input type="radio" name="addressType" value="Work" />
+                        <span>💼 Work (10 AM - 6 PM delivery)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="save-addr-row">
+                <label class="save-checkbox-label">
+                    <input type="checkbox" id="save-address-chk" checked />
+                    Save this address for fast 1-click checkout
+                </label>
+                <button type="button" class="btn-save-addr" onclick="saveCustomerAddress(true)">
+                    💾 Save Delivery Address
+                </button>
+            </div>
+        </div>
+
+        <input type="hidden" id="shipping-address" />
+    </div>
+
+    <!-- Payment Mode Selection (Flipkart & Meesho Style) -->
+    <div class="payment-selection-box">
+        <h3>💳 Select Payment Mode</h3>
+        <p class="payment-subtitle">100% Secure & Trusted Payment Methods like Meesho & Flipkart</p>
+
+        <div class="payment-options-grid">
+
+            <!-- UPI Option -->
+            <label class="payment-card active" onclick="selectPaymentMethod('UPI', this)">
+                <input type="radio" name="paymentMethod" value="UPI" checked />
+                <div class="payment-icon">📱</div>
+                <div class="payment-info">
+                    <strong>UPI (Google Pay / PhonePe / Paytm)</strong>
+                    <p>Instant UPI payment with zero convenience fee</p>
+                </div>
+                <span class="pay-badge fast">Instant ⚡</span>
+            </label>
+
+            <!-- COD Option -->
+            <label class="payment-card" onclick="selectPaymentMethod('Cash on Delivery', this)">
+                <input type="radio" name="paymentMethod" value="Cash on Delivery" />
+                <div class="payment-icon">💵</div>
+                <div class="payment-info">
+                    <strong>Cash on Delivery (COD)</strong>
+                    <p>Pay with Cash or UPI when package arrives at your door</p>
+                </div>
+                <span class="pay-badge cod">Most Popular 🔥</span>
+            </label>
+
+            <!-- Card Option -->
+            <label class="payment-card" onclick="selectPaymentMethod('Credit / Debit Card', this)">
+                <input type="radio" name="paymentMethod" value="Credit / Debit Card" />
+                <div class="payment-icon">💳</div>
+                <div class="payment-info">
+                    <strong>Credit / Debit / ATM Card</strong>
+                    <p>Visa, MasterCard, RuPay, Maestro</p>
+                </div>
+            </label>
+
+            <!-- Net Banking Option -->
+            <label class="payment-card" onclick="selectPaymentMethod('Net Banking', this)">
+                <input type="radio" name="paymentMethod" value="Net Banking" />
+                <div class="payment-icon">🏦</div>
+                <div class="payment-info">
+                    <strong>Net Banking</strong>
+                    <p>SBI, HDFC, ICICI, Axis and 50+ banks</p>
+                </div>
+            </label>
+
+        </div>
+
+        <!-- Dynamic Subforms for Selected Payment -->
+        <div id="payment-details-container" class="payment-details-container">
+            <div id="upi-details" class="pay-subform">
+                <label for="upi-id-input">Enter UPI ID / VPA:</label>
+                <div class="upi-input-row">
+                    <input type="text" id="upi-id-input" placeholder="e.g. mobile@upi or name@okaxis" />
+                    <button type="button" class="verify-upi-btn" onclick="verifyUpiId()">Verify</button>
+                </div>
+                <small id="upi-verify-msg" class="upi-hint">Supports Google Pay, PhonePe, Paytm, BHIM UPI</small>
+            </div>
+
+            <div id="card-details" class="pay-subform" style="display: none;">
+                <label for="card-number-input">Card Number:</label>
+                <input type="text" id="card-number-input" placeholder="•••• •••• •••• 4242" maxlength="19" />
+                <div class="card-row">
+                    <div>
+                        <label for="card-expiry-input">Expiry (MM/YY):</label>
+                        <input type="text" id="card-expiry-input" placeholder="08/29" maxlength="5" />
+                    </div>
+                    <div>
+                        <label for="card-cvv-input">CVV:</label>
+                        <input type="password" id="card-cvv-input" placeholder="•••" maxlength="4" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="cod-details" class="pay-subform" style="display: none;">
+                <div class="cod-banner">
+                    ✅ <strong>Cash on Delivery Confirmed!</strong> No online payment required right now. Pay ₹<span id="cod-total-amount">0</span> with cash or UPI QR upon delivery.
+                </div>
+            </div>
+
+            <div id="netbanking-details" class="pay-subform" style="display: none;">
+                <label for="bank-select">Choose Your Bank:</label>
+                <select id="bank-select">
+                    <option value="HDFC Bank">HDFC Bank</option>
+                    <option value="State Bank of India">State Bank of India (SBI)</option>
+                    <option value="ICICI Bank">ICICI Bank</option>
+                    <option value="Axis Bank">Axis Bank</option>
+                    <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cart-summary">
+
+        <p>
+            Subtotal:
+            ₹<span id="subtotal">0.00</span>
+        </p>
+
+        <p>
+            Discount:
+            ₹<span id="discount">0.00</span>
+        </p>
+
+        <h2>
+            Total:
+            ₹<span id="total">0.00</span>
+        </h2>
+
+
+        <div class="cart-buttons">
+
+            <button
+                class="clear-btn"
+                onclick="clearCart()"
+            >
+                Clear Cart
+            </button>
+
+            <button
+                class="checkout-btn"
+                onclick="checkout()"
+            >
+                💳 Place Order
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    <h3>🛍️ ShopEase</h3>
+    <p>Simple. Smart. Convenient Shopping.</p>
+    <div class="footer-links">
+        <a href="seller-login.html" class="footer-seller-link">🏪 Sell on ShopEase (Seller Portal)</a>
+    </div>
+    <p>© 2026 ShopEase. All Rights Reserved.</p>
+</footer>
+
+
+<div id="notification" class="notification"></div>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

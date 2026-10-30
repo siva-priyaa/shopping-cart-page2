@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ShopEase - Orders</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <a href="index.html" class="logo">🛍️ ShopEase</a>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="products.html">Products</a>
+
+        <a href="wishlist.html">
+            ❤️ Wishlist
+            <span id="wishlist-count">0</span>
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+
+        <a href="orders.html">📦 Orders</a>
+
+        <a href="account.html">👤 Account</a>
+
+        <a href="seller-login.html" class="nav-seller-link" style="color: #f59e0b; font-weight: 600;">🏪 Seller Login</a>
+
+        <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+    <h1>📦 My Orders & Tracking</h1>
+
+    <p class="page-subtitle">
+        Track your packages and view order history.
+    </p>
+
+    <!-- Track Any Order Search Box -->
+    <div class="track-box">
+        <h3>🔍 Track Your Package</h3>
+        <p class="track-hint">Enter your Order ID (e.g., ORD...) or Tracking Number</p>
+        <div class="track-input-group">
+            <input
+                type="text"
+                id="track-input"
+                placeholder="Enter Order ID or Tracking Number..."
+            />
+            <button onclick="searchAndTrackOrder()">
+                Track Package 🚚
+            </button>
+            <button class="clear-track-btn" onclick="clearTrackSearch()">
+                Show All
+            </button>
+        </div>
+        <div id="track-message" class="track-message"></div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="order-filter-bar">
+        <button class="filter-tab active" onclick="filterOrdersByStatus('all', this)">All Orders</button>
+        <button class="filter-tab" onclick="filterOrdersByStatus('active', this)">In Progress 🚚</button>
+        <button class="filter-tab" onclick="filterOrdersByStatus('Delivered', this)">Delivered ✅</button>
+    </div>
+
+    <div id="orders-list" class="orders-list"></div>
+
+</main>
+
+<div id="notification" class="notification"></div>
+
+
+<!-- Rating & Review Modal for Ordered Items -->
+<div id="order-review-modal" class="modal-overlay" onclick="handleOrderReviewBackdrop(event)">
+    <div class="modal-card review-modal-card">
+        <button class="modal-close-btn" onclick="closeOrderReviewModal()" aria-label="Close">✕</button>
+        <div class="review-modal-content">
+            <div class="review-modal-header">
+                <h3>⭐ Rate & Review Product</h3>
+                <p id="review-product-title" class="review-product-title"></p>
+            </div>
+            
+            <div class="star-rating-picker">
+                <span class="star-label">Rate this product:</span>
+                <div class="interactive-stars" id="order-stars">
+                    <span class="star" data-val="1" onclick="setOrderPickerRating(1)">★</span>
+                    <span class="star" data-val="2" onclick="setOrderPickerRating(2)">★</span>
+                    <span class="star" data-val="3" onclick="setOrderPickerRating(3)">★</span>
+                    <span class="star" data-val="4" onclick="setOrderPickerRating(4)">★</span>
+                    <span class="star active" data-val="5" onclick="setOrderPickerRating(5)">★</span>
+                </div>
+                <span id="order-rating-text" class="star-rating-text">5.0 - Excellent</span>
+            </div>
+            
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="order-review-comment">Your Customer Review / Experience:</label>
+                <textarea id="order-review-comment" rows="4" placeholder="How was the quality, fit, and delivery? Share your feedback to help other buyers."></textarea>
+            </div>
+            
+            <div class="review-modal-actions">
+                <button type="button" class="submit-review-btn" onclick="submitOrderReview()">
+                    🚀 Post Customer Review
+                </button>
+                <button type="button" class="cancel-review-btn" onclick="closeOrderReviewModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <h3>🛍️ ShopEase</h3>
+    <p>Simple. Smart. Convenient Shopping.</p>
+    <div class="footer-links">
+        <a href="seller-login.html" class="footer-seller-link">🏪 Sell on ShopEase (Seller Portal)</a>
+    </div>
+    <p>© 2026 ShopEase. All Rights Reserved.</p>
+</footer>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
